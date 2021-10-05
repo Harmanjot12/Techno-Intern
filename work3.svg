@@ -1,0 +1,121 @@
+<svg width="100%" height="100%" viewBox="0 0 600 600"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+  <desc><![CDATA[
+    Yin Yang Clock
+    
+    Clock face rotates once per day and indicates daylight or darkness
+    As evening approaches, the Yin (shady side) starts to take over the top of the clock and
+    as morning approaches, the Yang (sunny side) starts to take over the top of the clock
+    
+    written by Jay Nick
+    steamcoded.org
+  ]]>
+  </desc>
+  
+  <script type="application/x-javascript"><![CDATA[
+    var Clock = new function()
+    {
+      window.addEventListener("load", setClock);
+
+      function setClock()
+      {
+        var sec;
+        var min;
+        var hr;
+        var deg;
+        var node;
+        
+        var dt = new Date();
+        var deg=0;
+      
+        min = dt.getMinutes();
+        sec = dt.getSeconds();
+        ms = dt.getMilliseconds();
+
+        deg = (360/60)*(sec+ms/1000);
+        node = document.getElementById("seconds");
+        deg %= 360;
+        node.setAttribute("transform","rotate("+deg+",300,300)");
+
+        deg = (360/3600)*(60*min+sec);
+        node = document.getElementById("minutes");
+        deg %= 360;
+        node.setAttribute("transform","rotate("+deg+",300,300)");
+        
+        hr = dt.getHours();
+        deg = 30*hr + 30/60*min;
+        var node = document.getElementById("hours");
+        deg %= 360;
+        node.setAttribute("transform","rotate("+deg+",300,300)");
+
+        deg = 15*(hr+6) + 15/60*min;
+        var node = document.getElementById("yinyang");
+        deg %= 360;
+        node.setAttribute("transform","rotate("+deg+",300,300)");
+
+        document.getElementById("asec").beginElement();
+        document.getElementById("amin").beginElement();
+        document.getElementById("ahr").beginElement();
+        
+        var timeout = ((60-dt.getSeconds())%60)*1000;
+        timeout-=dt.getMilliseconds/1000;
+        
+        setTimeout(setClock,timeout);
+      }
+    }();
+  ]]>
+  </script>
+  
+  <g>
+    <g id="yinyang">
+      <g id="yy">
+        <circle cx="300" cy="300" r="290" style="fill:black;" />
+        <path d="M300,10A145,145,0,1,0,300,300A145,145,0,0,1,300,590A290,290,0,1,0,300,10" style="fill:white;" />
+        <circle cx="300" cy="155" r="40" style="fill:black;" />
+        <circle cx="300" cy="445" r="40" style="fill:white;" />
+      </g>
+    </g>
+
+    <g id="hours" transform="rotate(150,300,300)">
+      <path d="M290,300L300,150L310,300L300,350z" style="fill:#999">
+       <animateTransform id="ahr" attributeName="transform" type="rotate" from="0,300,300" to="360,300,300" dur="43200s" repeatCount="indefinite" />
+      </path>
+    </g>
+    <g id="minutes">
+      <path d="M290,300L300,80L310,300L300,380z" style="fill:#aaa">
+       <animateTransform id="amin" attributeName="transform" type="rotate" from="0,300,300" to="360,300,300" dur="3600s" repeatCount="indefinite" />
+      </path>
+    </g>
+    <g id="seconds">
+      <path d="M293,300L300,50L307,300L300,380z" style="fill:#bbb">
+       <animateTransform id="asec" attributeName="transform" attributeType="XML" type="rotate" from="0,300,300" to="360,300,300" dur="60s" repeatCount="indefinite" />
+      </path>
+    <use xlink:href="#yy" transform="translate(306,294) scale(-0.02,0.02) rotate(0,300,300)" />
+    </g>
+  </g>
+  
+  <g id="fivemin">
+    <use xlink:href="#yy" transform="translate(312,12) scale(-0.04,0.04) rotate(0,300,300)" style="stroke:white;stroke-width:4px;" />
+    <g id="onemin" transform="rotate(6,300,300)">
+      <use xlink:href="#yy" transform="translate(306,12) scale(-0.02,0.02) rotate(0,300,300)" style="stroke:white;stroke-width:8px;" />
+    </g>
+    <use xlink:href="#onemin" transform="rotate(6,300,300)"/>
+    <use xlink:href="#onemin" transform="rotate(12,300,300)"/>
+    <use xlink:href="#onemin" transform="rotate(18,300,300)"/>
+  </g>
+  <use xlink:href="#fivemin" transform="rotate(30,300,300)"/>
+  <use xlink:href="#fivemin" transform="rotate(60,300,300)"/>
+  <use xlink:href="#fivemin" transform="rotate(90,300,300)"/>
+  <use xlink:href="#fivemin" transform="rotate(120,300,300)"/>
+  <use xlink:href="#fivemin" transform="rotate(150,300,300)"/>
+  <use xlink:href="#fivemin" transform="rotate(180,300,300)"/>
+  <use xlink:href="#fivemin" transform="rotate(210,300,300)"/>
+  <use xlink:href="#fivemin" transform="rotate(240,300,300)"/>
+  <use xlink:href="#fivemin" transform="rotate(270,300,300)"/>
+  <use xlink:href="#fivemin" transform="rotate(300,300,300)"/>
+  <use xlink:href="#fivemin" transform="rotate(330,300,300)"/>
+  
+  <circle cx="300" cy="300" r="290" style="fill:none;stroke:black;stroke-width:1.5px;" />
+</svg>
